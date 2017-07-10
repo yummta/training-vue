@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<h1>hello :)</h1>
+	<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+	<script>
+		(function(){
+			var fn;
+			fn = {};
+			fn.getCards = function(){
+
+			}
+
+			fn.hello = function(){
+				console.log('hello')
+			}
+
+			fn.promise = new Promise( function(resolve, reject) {
+				$.ajax({
+					type: 'GET',
+					url: 'http://www.clashapi.xyz/api/cards',
+					dataType: 'json',
+					success: function(data){
+						console.log('petición completa')
+						resolve(data)
+					},
+					error: function (err){
+						reject(err)
+					}
+				})				
+			} )
+
+			init = function(){
+				fn.hello()
+				fn.promise.then( function(result){
+					console.log('se cumplio la primera promesa. AJAX')
+					return new Promise(function(resolve, refect){
+						setTimeout(function(){
+							console.log(result[0].name)
+							console.log("Esperamos 3 segundos")
+							resolve(1987)
+						}, 3000)
+					})
+				}, function(err){
+					console.log(err)
+				}).then( function(result){
+					console.log(`Yo nací el ${result}`);
+				}, function(err){
+					console.log(err)
+				})
+			}
+
+			init();
+		})();
+
+
+	</script>
+</body>
+</html>
